@@ -45,21 +45,17 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="todo1">
-        <div className="todo2">
-          <AddToDo handleAdd={handleAdd} value={todo} onChange={handleChange} />
-        </div>
-        <div className="todolist">
-          {todos.length &&
-            todos.map((item) => (
-              <Todo
-                key={item.id}
-                item={item}
-                handleToggleStatus={handleToggleStatus}
-                handleDelete={handleDelete}
-              />
-            ))}
-        </div>
+      <AddToDo handleAdd={handleAdd} value={todo} onChange={handleChange} />
+      <div>
+        {todos.length &&
+          todos.map((item) => (
+            <Todo
+              key={item.id}
+              item={item}
+              handleToggleStatus={handleToggleStatus}
+              handleDelete={handleDelete}
+            />
+          ))}
       </div>
     </div>
   );
