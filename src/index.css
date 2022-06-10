@@ -91,3 +91,8 @@
 .del {
   background-color: red;
 }
+
+.add-todo {
+  display: flex;
+  align-items: center;
+}

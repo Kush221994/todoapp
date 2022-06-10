@@ -1,50 +1,67 @@
-import React, { useState } from "react";
+import React from "react";
+
 import AddToDo from "../addTodo/addtodo";
-import ToDo from "../todo/todo";
-import ToDoList from "../todolist/todolist";
+import Todo from "../todo/todo";
 
 const Home = () => {
-  const [todo, setTodo] = useState("");
-  const [items, setItems] = useState([]);
+  const [todos, setTodos] = React.useState([]);
+  const [todo, setTodo] = React.useState("");
 
-  const todolist = (e) => {
-    setTodo(e.target.value);
-  };
-
-  const addItems = () => {
-    setItems((previousItems) => {
-      return [...previousItems, todo];
+  const handleAdd = () => {
+    setTodos((previousItems) => {
+      return [
+        ...previousItems,
+        {
+          id: todos.length,
+          value: todo,
+          status: "pending",
+        },
+      ];
     });
     setTodo("");
   };
 
-  const CompleteTodo = () => {
-    console.log("clicked");
+  const handleToggleStatus = (id) => {
+    setTodos((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            status: item.status === "completed" ? "pending" : "completed",
+          };
+        }
+        return item;
+      })
+    );
   };
 
-  const DeleteTodo = () => {
-    setItems([]);
-    console.log("clicked");
+  const handleDelete = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
+  };
+
+  const handleChange = (e) => {
+    setTodo(e.target.value);
   };
 
   return (
-    <>
-      <div className="home">
-        <div className="todo1">
-          <div className="todo2">
-            <ToDo value={todo} onChange={todolist} />
-            <AddToDo handleAddItems={addItems} />
-          </div>
-          <div className="todolist">
-            <ToDoList
-              value={items}
-              handleComplTodo={CompleteTodo}
-              handleDelToDo={DeleteTodo}
-            />
-          </div>
+    <div className="home">
+      <div className="todo1">
+        <div className="todo2">
+          <AddToDo handleAdd={handleAdd} value={todo} onChange={handleChange} />
+        </div>
+        <div className="todolist">
+          {todos.length &&
+            todos.map((item) => (
+              <Todo
+                key={item.id}
+                item={item}
+                handleToggleStatus={handleToggleStatus}
+                handleDelete={handleDelete}
+              />
+            ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

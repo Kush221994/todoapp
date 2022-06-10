@@ -1,19 +1,28 @@
 import React from "react";
 
-const ToDo = ({ value, children, ...rest }) => {
+const Todo = ({ item, handleToggleStatus, handleDelete }) => {
   return (
-    <>
-      <div className="todobox">
-        <input
-          type="text"
-          placeholder="Add ToDo"
-          className="search"
-          value={value}
-          {...rest}
-        />
+    <div className="itemvalue">
+      <div>{item.value}</div>
+      <div>{item.status}</div>
+      <div>
+        <button
+          className="itemvalbtn cmpl"
+          onClick={() => handleToggleStatus(item.id)}
+        >
+          {item.status === "pending" ? "Complete" : "Revert"}
+        </button>
       </div>
-    </>
+      <div>
+        <button
+          className="itemvalbtn del"
+          onClick={() => handleDelete(item.id)}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default ToDo;
+export default Todo;

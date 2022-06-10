@@ -1,12 +1,13 @@
 import React from "react";
 
-const AddToDo = ({ handleAddItems }) => {
+const AddToDo = ({ handleAdd, value, onChange }) => {
   return (
-    <>
-      <button className="add" onClick={handleAddItems}>
+    <div className="add-todo">
+      <input className="search" value={value} onChange={onChange} />
+      <button className="add" onClick={handleAdd}>
         Add
       </button>
-    </>
+    </div>
   );
 };
 
